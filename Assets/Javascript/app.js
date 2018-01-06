@@ -1,4 +1,29 @@
+$(document).ready(function() {
+
+
+var terms = ["Mountain Biking", "Corgis", "Vanlife", "Kangaroos", "Skydiving", "Ryan Gosling", "Muscle Cars", "Fishing", "Hiking", "Star Wars"];
+
+// Creating our buttons based on the Terms
+function renderButtons() {
+  $("#buttons").empty();
+
+  for (var i = 0; i < terms.length; i++) {
+          var termBtn = $("<button>");
+          termBtn.addClass("btn btn-danger");
+          termBtn.attr("data-term", terms[i]);
+          termBtn.text(terms[i]);
+          $("#buttons").prepend(termBtn);
+        };
+
+
+
+
+
 $("button").on("click", function() {
+      console.log("clicked");
+      // Empty the Gif Div with every new button click
+      $("#gifs-appear-here").empty();
+
       // In this case, the "this" keyword refers to the button that was clicked
       var term = $(this).attr("data-term");
 
@@ -15,6 +40,8 @@ $("button").on("click", function() {
         .done(function(response) {
           // Storing an array of results in the results variable
           var results = response.data;
+          console.log(response);
+
 
           // Looping over every result item
           for (var i = 0; i < results.length; i++) {
@@ -22,28 +49,59 @@ $("button").on("click", function() {
             // Only taking action if the photo has an appropriate rating
             if (results[i].rating !== "r" && results[i].rating !== "pg-13") {
               // Creating a div with the class "item"
-              var gifDiv = $("<div class='item'>");
+              var gifDiv = $("<div class='item card'>");
 
               // Storing the result item's rating
               var rating = results[i].rating;
 
               // Creating a paragraph tag with the result item's rating
-              var p = $("<p>").text("Rating: " + rating);
+              var p = $("<p>").text("Rating: " + rating.toUpperCase());
 
               // Creating an image tag
               var termImage = $("<img>");
 
-              // Giving the image tag an src attribute of a proprty pulled off the
-              // result item
-              termImage.attr("src", results[i].images.fixed_height.url);
+              termImage.attr("src", results[i].images.original_still.url);
+              termImage.attr("data-still", results[i].images.original_still.url);
+              termImage.attr("data-animate", results[i].images.original.url);
+              termImage.attr("data-state", "still");
+              termImage.addClass("gif");
 
-              // Appending the paragraph and personImage we created to the "gifDiv" div we created
-              gifDiv.append(p);
+
               gifDiv.append(termImage);
+              gifDiv.append(p);
 
-              // Prepending the gifDiv to the "#gifs-appear-here" div in the HTML
               $("#gifs-appear-here").prepend(gifDiv);
             }
           }
         });
     });
+};
+
+$("#add-gif").on("click", function(event) {
+        event.preventDefault();
+
+        // This line grabs the input from the textbox
+        var newGif = $("#gif-input").val().trim();
+
+        // Adding term from the textbox to our array
+        terms.push(newGif);
+        console.log(terms);
+        renderButtons();
+        $("#gif-input").val("");
+      });
+
+$("#gifs-appear-here").on("click", ".gif", function() {
+          console.log("clicked");
+          var state = $(this).attr("data-state");
+            if (state === "still") {
+            $(this).attr("src", $(this).attr("data-animate"));
+            $(this).attr("data-state", "animate");
+          } else {
+            $(this).attr("src", $(this).attr("data-still"));
+            $(this).attr("data-state", "still");
+          }
+      });
+
+
+renderButtons();
+});

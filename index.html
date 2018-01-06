@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Quoth the Giphy</title>
+  <title>Gif-Tastic Gif Search</title>
 
   <!-- Link to CSS Reset -->
   <link rel="stylesheet" type="text/css" href="Assets/CSS/reset.css">
@@ -16,18 +16,32 @@
 </head>
 
 <body>
-  <button data-term="Mountain Bike">BIKES!</button>
-  <button data-term="Corgis">CORGI DOGS!</button>
-  <button data-term="Vanlife">VAN LIFE!</button>
-  <button data-term="Aussie+Australia+Outback">AUSTRALIA!</button>
-  <button data-term="Skydiving">SKYDIVING!</button>
-  <button data-term="Ryan Gosling">RYAN GOSLING!</button>
-  <button data-term="Muscle Car">MUSCLE CARS!</button>
-  <button data-term="Fishing">FISHING!</button>
-  <button data-term="Hiking">HIKING!</button>
-
-  <div id="gifs-appear-here">
+  <div class="jumbotron jumbotron-fluid">
+    <div class="header text-center title">
+      <h1>Ben's Gif-Tastic Gif Search App</h1>
+      <h4>Click a button to display related content</h4>
+      <h5>Click a gif to animate or pause it!</h5>
+      <p>(this may take a momemt to load)</p>
+    </div>
   </div>
+  <div class="container">
+    <div class="text-center" id="buttons">
+    </div>
+  </div>
+  <div class="container">
+    <div class="text-center">
+      <form id="gif-form">
+      <label for="gif-input" class="strong">Add your own gif button!</label>
+      <input type="text" id="gif-input" placeholder="Search"><br>
+      <input class="btn-danger" id="add-gif" type="submit" value="Search for new Gifs!">
+    </form>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row text-center justify-content-center" id="gifs-appear-here">
+    </div>
+  </div>
+  
 
   <!-- Link to AJAX -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
