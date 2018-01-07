@@ -96,9 +96,11 @@ $("#gifs-appear-here").on("click", ".gif", function() {
             if (state === "still") {
             $(this).attr("src", $(this).attr("data-animate"));
             $(this).attr("data-state", "animate");
+            $(this).closest(".card").css("background", "grey");
           } else {
             $(this).attr("src", $(this).attr("data-still"));
             $(this).attr("data-state", "still");
+            $(this).closest(".card").css("background", "#e9ecef");
           }
       });
 
